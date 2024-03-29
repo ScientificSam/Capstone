@@ -1,3 +1,17 @@
+Important Factors in data
+-----------------------------
+
+attendance, v_stlbase, v_errors, league__NL, day__Sun, day__Thu
+
+
+
+
+Trends in Attendance: Analyze attendance figures over different time periods (seasons, months, days) to identify trends. Are there seasonal variations? Does attendance fluctuate based on specific teams or game types?
+Win/Loss Patterns: Examine win/loss ratios for teams across seasons or game stretches. Are there winning streaks or losing slumps for certain teams?
+Performance Over Time: Track offensive or defensive statistics (e.g., runs scored, strikeouts) for teams or players over time. Are there improvements or declines in performance as the season progresses?
+Impact of External Factors: Explore how external factors (e.g., weather conditions, umpire calls) might influence game outcomes. Analyze win/loss rates or specific statistics (e.g., errors) on days with rain or specific umpires officiating.
+
+
 Important fcators : Offensive - pitching , Defensive - Batting
 -------------------------------------------------------------------------
 double

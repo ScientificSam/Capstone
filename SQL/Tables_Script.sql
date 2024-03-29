@@ -1,6 +1,7 @@
 
--- capstone.gamelogs definition
+DROP TABLE IF EXISTS gamelogs;
 
+-- capstone.gamelogs definition
 CREATE TABLE `gamelogs` (
   `playdate` date DEFAULT NULL,
   `number` int DEFAULT NULL,
@@ -192,6 +193,55 @@ SELECT *,
     END AS v_win_val
 FROM capstone.gamelogs gl) res);
 
-alter table v_win_table add v_win_id mediumint not null auto_increment primary key;
 
-alter table capstone.gamelogs add id  mediumint not null auto_increment primary key;
+DROP TABLE IF EXISTS biofile;
+
+-- capstone.biofile definition
+CREATE TABLE `biofile` (
+  `PLAYERID` varchar(50) DEFAULT NULL,
+  `LAST` varchar(50) DEFAULT NULL,
+  `FIRST` varchar(50) DEFAULT NULL,
+  `NICKNAME` varchar(50) DEFAULT NULL,
+  `BIRTHDATE` varchar(50) DEFAULT NULL,
+  `BIRTH.CITY` varchar(50) DEFAULT NULL,
+  `BIRTH.STATE` varchar(50) DEFAULT NULL,
+  `BIRTH.COUNTRY` varchar(50) DEFAULT NULL,
+  `PLAY.DEBUT` varchar(50) DEFAULT NULL,
+  `PLAY.LASTGAME` varchar(50) DEFAULT NULL,
+  `MGR.DEBUT` varchar(50) DEFAULT NULL,
+  `MGR.LASTGAME` varchar(50) DEFAULT NULL,
+  `COACH.DEBUT` varchar(50) DEFAULT NULL,
+  `COACH.LASTGAME` varchar(50) DEFAULT NULL,
+  `UMP.DEBUT` varchar(50) DEFAULT NULL,
+  `UMP.LASTGAME` varchar(50) DEFAULT NULL,
+  `DEATHDATE` varchar(50) DEFAULT NULL,
+  `DEATH.CITY` varchar(50) DEFAULT NULL,
+  `DEATH.STATE` varchar(50) DEFAULT NULL,
+  `DEATH.COUNTRY` varchar(50) DEFAULT NULL,
+  `BATS` varchar(50) DEFAULT NULL,
+  `THROWS` varchar(50) DEFAULT NULL,
+  `HEIGHT` varchar(50) DEFAULT NULL,
+  `WEIGHT` int DEFAULT NULL,
+  `CEME.CITY` varchar(50) DEFAULT NULL,
+  `CEME.STATE` varchar(50) DEFAULT NULL,
+  `CEME.COUNTRY` varchar(50) DEFAULT NULL,
+  `BIRTH.NAME` varchar(50) DEFAULT NULL,
+  `NAME.CHG` varchar(50) DEFAULT NULL,
+  `BAT.CHG` varchar(50) DEFAULT NULL,
+  `HOF` varchar(50) DEFAULT NULL,
+  `height_cms` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+DROP TABLE IF EXISTS biofile;
+-- capstone.player_bio definition
+CREATE TABLE `player_bio` (
+  `ID` mediumint NOT NULL AUTO_INCREMENT,
+  `player_bats` varchar(255) DEFAULT NULL,
+  `player_throws` varchar(255) DEFAULT NULL,
+  `player_heights` text,
+  `player_weights` text,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=421697 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
