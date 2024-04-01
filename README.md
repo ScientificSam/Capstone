@@ -11,7 +11,7 @@ Could we predict the score based on ongoing game? What are the top 10 features t
 
 # Proposed Vision
 
-Based on the physical aspects like the ballpark location, game type, day night etc., and the players and team’s dynamics using statistics, build a machine learning model to predict the win or lose for that scheduled day.
+Based on the physical aspects like the ballpark location, game type, day night etc., and the players heights, weights and using game logs, build a machine learning model to predict the visting team score.
 
 
 
@@ -75,9 +75,9 @@ Here are the steps involved in creating the view `gm_log`. This view contains th
 * `at-bats` &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp; : &nbsp;&nbsp; A batter's turn batting against a pitcher.
 * `hits`    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; : &nbsp;&nbsp;  Single, Double, Triple, Homerun.
 * `rbi`   &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;   : &nbsp;&nbsp; A batter for making a play that allows a run to be scored.
-* `individual earned runs` &nbsp; : &nbsp;&nbsp; Runs scored because of the pitcher's pitch alone.
+* `individual earned runs` &nbsp;&emsp; : &nbsp;&nbsp; Runs scored because of the pitcher's pitch alone.
 * `errors`  &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; : &nbsp;&nbsp; Fielding errors, Throwing errors, Catcher's interference, Pitcher's errors.
-* `Team earned runs` &emsp;&emsp;&emsp;&nbsp;&nbsp;  : &nbsp;&nbsp; Sum of all earned runs by the batter due to pitchers pitch.
+* `Team earned runs` &emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;  : &nbsp;&nbsp; Sum of all earned runs by the batter due to pitchers pitch.
 * `walks` &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp; : &nbsp;&nbsp; A batter without hitting pitch, goes to base and becoms a base runner due to pitcher's pitch.
 * `Left on base` &emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp; : &nbsp;&nbsp; number of baserunners who are still on base when there is a third out.
 
