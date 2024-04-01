@@ -172,27 +172,49 @@ CREATE TABLE `gamelogs` (
 
 
 DROP TABLE IF EXISTS v_win_table;
+
 CREATE TABLE IF NOT EXISTS v_win_table AS (
+select res.v_win_val FROM (SELECT *,
+  CASE
+    WHEN gl.vscore IS NULL OR gl.hscore IS NULL THEN NULL  -- Check for null in either score
+    WHEN gl.vscore > gl.hscore THEN 1
+    WHEN gl.vscore < gl.hscore THEN 0
+    ELSE NULL
+  END AS v_win_val
+FROM capstone.gamelogs gl) res);
+
+------ The below logic can be used to create a table when there is no vscore or hscore given--------
+
+/* CREATE TABLE IF NOT EXISTS v_win_table AS (
 select
 res.v_win_val FROM (
 SELECT *,
     CASE
-        WHEN g_rbi_bt_id IS NULL OR g_rbi_bt_id = '' THEN NULL
+        WHEN ((trim(g_rbi_bt_id) IS null) and (trim(w_pch_id) IS null)) OR ((trim(g_rbi_bt_id) = '') and (trim(w_pch_id) = '')) THEN null
         WHEN (
-            IF(v_st_pl1_id = g_rbi_bt_id, 1, 0) +
-            IF(v_st_pl2_id = g_rbi_bt_id, 1, 0) +
-            IF(v_st_pl3_id = g_rbi_bt_id, 1, 0) +
-            IF(v_st_pl4_id = g_rbi_bt_id, 1, 0) +
-            IF(v_st_pl5_id = g_rbi_bt_id, 1, 0) +
-            IF(v_st_pl6_id = g_rbi_bt_id, 1, 0) +
-            IF(v_st_pl7_id = g_rbi_bt_id, 1, 0) +
-            IF(v_st_pl8_id = g_rbi_bt_id, 1, 0) +
-            IF(v_st_pl9_id = g_rbi_bt_id, 1, 0)
-        ) = 1 THEN 1
+            IF(trim(v_st_pl1_id) =  trim(g_rbi_bt_id) , 1, 0) +
+            IF(trim(v_st_pl2_id) =  trim(g_rbi_bt_id) , 1, 0) +
+            IF(trim(v_st_pl3_id) =  trim(g_rbi_bt_id) , 1, 0) +
+            IF(trim(v_st_pl4_id) =  trim(g_rbi_bt_id) , 1, 0) +
+            IF(trim(v_st_pl5_id) =  trim(g_rbi_bt_id) , 1, 0) +
+            IF(trim(v_st_pl6_id) =  trim(g_rbi_bt_id) , 1, 0) +
+            IF(trim(v_st_pl7_id) =  trim(g_rbi_bt_id) , 1, 0) +
+            IF(trim(v_st_pl8_id) =  trim(g_rbi_bt_id) , 1, 0) +
+            IF(trim(v_st_pl9_id) =  trim(g_rbi_bt_id) , 1, 0) +
+            IF(trim(v_st_pl1_id) =  trim(w_pch_id) , 1, 0) +
+            IF(trim(v_st_pl2_id) =  trim(w_pch_id) , 1, 0) +
+            IF(trim(v_st_pl3_id) =  trim(w_pch_id) , 1, 0) +
+            IF(trim(v_st_pl4_id) =  trim(w_pch_id) , 1, 0) +
+            IF(trim(v_st_pl5_id) =  trim(w_pch_id) , 1, 0) +
+            IF(trim(v_st_pl6_id) =  trim(w_pch_id) , 1, 0) +
+            IF(trim(v_st_pl7_id) =  trim(w_pch_id) , 1, 0) +
+            IF(trim(v_st_pl8_id) =  trim(w_pch_id) , 1, 0) +
+            IF(trim(v_st_pl9_id) =  trim(w_pch_id) , 1, 0) 
+        ) >= 1 THEN 1
         ELSE 0
     END AS v_win_val
 FROM capstone.gamelogs gl) res);
-
+*/
 
 DROP TABLE IF EXISTS biofile;
 
@@ -234,7 +256,7 @@ CREATE TABLE `biofile` (
 
 
 
-DROP TABLE IF EXISTS biofile;
+DROP TABLE IF EXISTS player_bio;
 -- capstone.player_bio definition
 CREATE TABLE `player_bio` (
   `ID` mediumint NOT NULL AUTO_INCREMENT,
@@ -245,3 +267,51 @@ CREATE TABLE `player_bio` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=421697 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- The below resultset will go into the player_bio table ------
+SELECT
+       (SELECT GROUP_CONCAT(p.weight SEPARATOR ',')
+        FROM capstone.biofile AS p
+        WHERE f.v_st_pl1_id = p.playerid
+          OR f.v_st_pl2_id = p.playerid
+          OR f.v_st_pl3_id = p.playerid
+          OR f.v_st_pl4_id = p.playerid
+          OR f.v_st_pl5_id = p.playerid
+          OR f.v_st_pl6_id = p.playerid
+          OR f.v_st_pl7_id = p.playerid
+          OR f.v_st_pl8_id = p.playerid
+          OR f.v_st_pl9_id = p.playerid) AS player_weights,
+       /* ... Indicator line ... */          
+          (SELECT GROUP_CONCAT(p.height_cms SEPARATOR ',')
+        FROM capstone.biofile AS p
+        WHERE f.v_st_pl1_id = p.playerid
+          OR f.v_st_pl2_id = p.playerid
+          OR f.v_st_pl3_id = p.playerid
+          OR f.v_st_pl4_id = p.playerid
+          OR f.v_st_pl5_id = p.playerid
+          OR f.v_st_pl6_id = p.playerid
+          OR f.v_st_pl7_id = p.playerid
+          OR f.v_st_pl8_id = p.playerid
+          OR f.v_st_pl9_id = p.playerid) AS player_heights,
+          (SELECT GROUP_CONCAT(p.bats SEPARATOR ',')
+        FROM capstone.biofile AS p
+        WHERE f.v_st_pl1_id = p.playerid
+          OR f.v_st_pl2_id = p.playerid
+          OR f.v_st_pl3_id = p.playerid
+          OR f.v_st_pl4_id = p.playerid
+          OR f.v_st_pl5_id = p.playerid
+          OR f.v_st_pl6_id = p.playerid
+          OR f.v_st_pl7_id = p.playerid
+          OR f.v_st_pl8_id = p.playerid
+          OR f.v_st_pl9_id = p.playerid) AS player_bats,
+          (SELECT GROUP_CONCAT(p.throws SEPARATOR ',')
+        FROM capstone.biofile AS p
+        WHERE f.v_st_pl1_id = p.playerid
+          OR f.v_st_pl2_id = p.playerid
+          OR f.v_st_pl3_id = p.playerid
+          OR f.v_st_pl4_id = p.playerid
+          OR f.v_st_pl5_id = p.playerid
+          OR f.v_st_pl6_id = p.playerid
+          OR f.v_st_pl7_id = p.playerid
+          OR f.v_st_pl8_id = p.playerid
+          OR f.v_st_pl9_id = p.playerid) AS player_throws
+FROM capstone.gamelogs AS f;
