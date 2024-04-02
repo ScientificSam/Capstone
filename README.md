@@ -70,7 +70,7 @@ Here are the steps involved in creating the view `gm_log`. This view contains th
 
 
 
-# Baseball Eulogy
+# Baseball Terminology
 
 * `at-bats` &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp; : &nbsp;&nbsp; A batter's turn batting against a pitcher.
 * `hits`    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; : &nbsp;&nbsp;  Single, Double, Triple, Homerun.
