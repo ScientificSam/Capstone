@@ -11,7 +11,7 @@ Could we predict the score based on ongoing game? What are the top 10 features t
 
 # Proposed Vision
 
-Based on the physical aspects like the ballpark location, game type, day night etc., and the players heights, weights and using game logs, build a machine learning model to predict the visting team score.
+Based on the physical aspects like the ballpark location, game type, day night, attendance, the players heights, weights and using game logs, build a machine learning model to predict the visting team score.
 
 
 
@@ -84,3 +84,30 @@ Here are the steps involved in creating the view `gm_log`. This view contains th
 
 
 # Building models and evaluating
+
+Our aim here is to predict the game win or lose, but the game win or lose depends upon the team score. If we have one team scoring more over the the other team, then the team with highest score wins.
+
+
+### Let's first build a model on physical features
+
+After building Logistic and Linear Regression model, Solely based on physical features, In logistic regression (Traget variable as win or lose), we have 50% accuracy. For the linear regression (Traget variable is the team score), we got negative mean squared errors and an R<sup>2</sup> value of 0.02 which is not good at all.
+
+Even though the stats model shows, the physical features are statstically significant, they have no predictive power, on guessing the game win or lose or guessing the team score.
+
+### Build a model based on on-going game
+
+After building a random forest regressor, to predict the team score, based on the features of  Home team offensive statistics and the visting team defensive statistics, we have a mean squared error of 0.21, which is somewhat good at predicting the team score.
+
+The top 10 features that determine the team score is
+
+* v_rbi &emsp;&emsp; -- &nbsp;&nbsp; Visting team RBI.
+* h_errors &nbsp;&nbsp; -- &nbsp;&nbsp; Home team errors (Defensive).
+* v_hits &emsp;&nbsp;&nbsp; -- &nbsp;&nbsp; Visting team hits.
+* h_in_runs &nbsp;&nbsp; -- &nbsp;&nbsp; Home team Indvidual earned runs (Pitching).
+* h_er_runs &nbsp;&nbsp; -- &nbsp;&nbsp; Home team earned runs (Pitching).
+* v_walks &emsp;&nbsp;&nbsp; -- &nbsp;&nbsp; Visting team walks.
+* v_lft_base &nbsp;&nbsp; -- &nbsp;&nbsp; Visting team left on bases.
+* len_game &nbsp;&nbsp; -- &nbsp;&nbsp; Number of innings.
+* attendance &nbsp;&nbsp; -- &nbsp;&nbsp; The number of the people attended.
+* len_min &nbsp;&nbsp; -- &nbsp;&nbsp; Length of the game in minutes.
+
