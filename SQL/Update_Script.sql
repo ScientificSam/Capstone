@@ -6,3 +6,17 @@ alter table capstone.biofile add height_cms integer;
 
 update capstone.biofile set height_cms = (select ((substring(HEIGHT,1,1)*12) + (round(SUBSTR(height, LOCATE('-', height) +  1))))*2.54)
 
+UPDATE capstone.biofile SET Birthdate = TRIM(Birthdate); 
+
+ALTER TABLE capstone.biofile ADD COLUMN birthdate_temp DATE;
+
+UPDATE capstone.biofile 
+SET birthdate_temp =  CASE 
+                      WHEN Birthdate = '' THEN NULL  -- Empty strings
+                      WHEN LENGTH(Birthdate) < 10 THEN NULL  -- Invalid (too short)
+                      WHEN Birthdate NOT LIKE '__/__/____' THEN CASE 
+                                                                  WHEN Birthdate LIKE '__/--/____' THEN STR_TO_DATE(CONCAT(Birthdate, '01'), '%m/%d/%Y') -- Add default '01' day
+                                                                  ELSE NULL -- Handle other invalid formats
+                                                              END 
+                      ELSE STR_TO_DATE(Birthdate, '%m/%d/%Y') 
+                      END;
