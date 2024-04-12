@@ -100,23 +100,61 @@ After building a random forest regressor, to predict the team score, based on th
 
 The top 10 features that determine the team score is
 
-* v_rbi &emsp;&emsp; -- &nbsp;&nbsp; Visting team RBI.
-* h_errors &nbsp;&nbsp; -- &nbsp;&nbsp; Home team errors (Defensive).
-* v_hits &emsp;&nbsp;&nbsp; -- &nbsp;&nbsp; Visting team hits.
-* h_in_runs &nbsp;&nbsp; -- &nbsp;&nbsp; Home team Indvidual earned runs (Pitching).
-* h_er_runs &nbsp;&nbsp; -- &nbsp;&nbsp; Home team earned runs (Pitching).
-* v_walks &emsp;&nbsp;&nbsp; -- &nbsp;&nbsp; Visting team walks.
-* v_lft_base &nbsp;&nbsp; -- &nbsp;&nbsp; Visting team left on bases.
-* len_game &nbsp;&nbsp; -- &nbsp;&nbsp; Number of innings.
-* attendance &nbsp;&nbsp; -- &nbsp;&nbsp; The number of the people attended.
-* len_min &nbsp;&nbsp; -- &nbsp;&nbsp; Length of the game in minutes.
+* len_game &emsp;&emsp; -- &nbsp;&nbsp; Number of Innings(9 Innings = 54)
+* h_pch_used &nbsp;&nbsp; -- &nbsp;&nbsp;Number of pitchers used
+* h_errors &emsp;&nbsp;&nbsp; -- &nbsp;&nbsp; Team Earned Runs
+* v_walks &nbsp;&nbsp; -- &nbsp;&nbsp; Walk because of pitcher error
+* len_min &nbsp;&nbsp; -- &nbsp;&nbsp; Length of the game in minutes
+* attendance &emsp;&nbsp;&nbsp; -- &nbsp;&nbsp; Ball park attendance
+* v_sf &nbsp;&nbsp; -- &nbsp;&nbsp; Sacrifice flys.
+* v_lft_base &nbsp;&nbsp; -- &nbsp;&nbsp; People left on bases.
+* median_weights &nbsp;&nbsp; -- &nbsp;&nbsp; The median of 9 players weights
+* h_assists &nbsp;&nbsp; -- &nbsp;&nbsp; Number of assists when playing defensive
 
 # Team Based analysis
 
+### There are similarities between teams in terms of offensive and defensive stats.
+
+![Clustering Defensive Stats](./Images/Number%20of%20clusters.png)
+
+Here we have a bunch of selected teams and their offensive and defensive stats. After we did the K-Means clustering, we can see we can group them into 3 or 4 clusters. 
+
+Teams when they are visting and similar in offensive stats. 
+
+Cluster 0 : 
+Chicago White Sox , Philadelphia Phillies, Pittsburgh Pirates, St. Louis Cardinals.
+
+Cluster 1 :
+Los Angeles Dodgers, Oakland Athletics, Washington Nationals.
+
+
+Home Teams when they are playing defensive, similar in defensive stats.
+
+Cluster 0 :
+Los Angeles Dodgers, Oakland Athletics, Washington Nationals.
+
+Cluster 1 :
+Boston Red Sox, Chicago White Sox, New York Yankees, Philadelphia Phillies, Pittsburgh Pirates, St. Louis Cardinals.
+
+
 ### Mets are very stable
 
-![Mets Timeline](./images/your_image.jpg)
+![Yankees Timeline](./Images/Yankees%20Timeline.png)
+
+Yankees Trend Line
+
+![Yankees Trendline](./Images/Yankees%20Trendline.png)
+
+Mets are younger team than yankees
+
+![Mets Timeline](./Images/Mets%20Timeline.png)
+
+Mets Trend Line
+
+![Mets Trendline](./Images/Mets%20trendline.png)
 
 ### Mets are intentional about how they win
 
-![Mets Winning Co-Relations](./images/your_image.jpg)
+Yankees vs Mets co-relational wins
+
+![Yankees vs Mets Winning Co-Relations](./Images/Mets%20vs%20Yankees%20Stats.png)
