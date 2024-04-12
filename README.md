@@ -111,3 +111,12 @@ The top 10 features that determine the team score is
 * attendance &nbsp;&nbsp; -- &nbsp;&nbsp; The number of the people attended.
 * len_min &nbsp;&nbsp; -- &nbsp;&nbsp; Length of the game in minutes.
 
+# Team Based analysis
+
+### Mets are very stable
+
+![Mets Timeline](./images/your_image.jpg)
+
+### Mets are intentional about how they win
+
+![Mets Winning Co-Relations](./images/your_image.jpg)

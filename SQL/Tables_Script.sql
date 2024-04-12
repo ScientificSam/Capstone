@@ -171,50 +171,6 @@ CREATE TABLE `gamelogs` (
 
 
 
-DROP TABLE IF EXISTS v_win_table;
-
-CREATE TABLE IF NOT EXISTS v_win_table AS (
-select res.v_win_val FROM (SELECT *,
-  CASE
-    WHEN gl.vscore IS NULL OR gl.hscore IS NULL THEN NULL  -- Check for null in either score
-    WHEN gl.vscore > gl.hscore THEN 1
-    WHEN gl.vscore < gl.hscore THEN 0
-    ELSE NULL
-  END AS v_win_val
-FROM capstone.gamelogs gl) res);
-
------- The below logic can be used to create a table when there is no vscore or hscore given--------
-
-/* CREATE TABLE IF NOT EXISTS v_win_table AS (
-select
-res.v_win_val FROM (
-SELECT *,
-    CASE
-        WHEN ((trim(g_rbi_bt_id) IS null) and (trim(w_pch_id) IS null)) OR ((trim(g_rbi_bt_id) = '') and (trim(w_pch_id) = '')) THEN null
-        WHEN (
-            IF(trim(v_st_pl1_id) =  trim(g_rbi_bt_id) , 1, 0) +
-            IF(trim(v_st_pl2_id) =  trim(g_rbi_bt_id) , 1, 0) +
-            IF(trim(v_st_pl3_id) =  trim(g_rbi_bt_id) , 1, 0) +
-            IF(trim(v_st_pl4_id) =  trim(g_rbi_bt_id) , 1, 0) +
-            IF(trim(v_st_pl5_id) =  trim(g_rbi_bt_id) , 1, 0) +
-            IF(trim(v_st_pl6_id) =  trim(g_rbi_bt_id) , 1, 0) +
-            IF(trim(v_st_pl7_id) =  trim(g_rbi_bt_id) , 1, 0) +
-            IF(trim(v_st_pl8_id) =  trim(g_rbi_bt_id) , 1, 0) +
-            IF(trim(v_st_pl9_id) =  trim(g_rbi_bt_id) , 1, 0) +
-            IF(trim(v_st_pl1_id) =  trim(w_pch_id) , 1, 0) +
-            IF(trim(v_st_pl2_id) =  trim(w_pch_id) , 1, 0) +
-            IF(trim(v_st_pl3_id) =  trim(w_pch_id) , 1, 0) +
-            IF(trim(v_st_pl4_id) =  trim(w_pch_id) , 1, 0) +
-            IF(trim(v_st_pl5_id) =  trim(w_pch_id) , 1, 0) +
-            IF(trim(v_st_pl6_id) =  trim(w_pch_id) , 1, 0) +
-            IF(trim(v_st_pl7_id) =  trim(w_pch_id) , 1, 0) +
-            IF(trim(v_st_pl8_id) =  trim(w_pch_id) , 1, 0) +
-            IF(trim(v_st_pl9_id) =  trim(w_pch_id) , 1, 0) 
-        ) >= 1 THEN 1
-        ELSE 0
-    END AS v_win_val
-FROM capstone.gamelogs gl) res);
-*/
 
 DROP TABLE IF EXISTS biofile;
 

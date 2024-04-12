@@ -1,4 +1,16 @@
-alter table v_win_table add v_win_id mediumint not null auto_increment primary key;
+-- Add a new column v_win_val to the gamelogs table
+ALTER TABLE capstone.gamelogs
+ADD COLUMN v_win_val INT NULL; -- Assuming v_win_val is of type INT and can contain NULL values
+
+-- Update the v_win_val column based on the conditions
+UPDATE capstone.gamelogs
+SET v_win_val = CASE
+    WHEN vscore IS NULL OR hscore IS NULL THEN NULL  -- Check for null in either score
+    WHEN vscore > hscore THEN 1
+    WHEN vscore < hscore THEN 0
+    ELSE NULL
+END;
+
 
 alter table capstone.gamelogs add id  mediumint not null auto_increment primary key;
 
