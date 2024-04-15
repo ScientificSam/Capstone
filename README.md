@@ -137,7 +137,7 @@ Cluster 1 :
 Boston Red Sox, Chicago White Sox, New York Yankees, Philadelphia Phillies, Pittsburgh Pirates, St. Louis Cardinals.
 
 
-### Mets are very stable
+### Mets doesn't have growth in their scoring.
 
 ![Yankees Timeline](./Images/Yankees%20Timeline.png)
 
