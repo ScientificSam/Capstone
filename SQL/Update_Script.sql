@@ -32,3 +32,15 @@ SET birthdate_temp =  CASE
                                                               END 
                       ELSE STR_TO_DATE(Birthdate, '%m/%d/%Y') 
                       END;
+
+
+----import the resultsets in temptables via export in dbeaver tool and update gamelogs table
+
+UPDATE gamelogs g
+INNER JOIN temptable1 t1 ON g.id = t1.id AND g.playdate = t1.playdate
+SET g.player_exps  = t1.player_exp 
+
+
+UPDATE gamelogs g
+INNER JOIN temptable t ON g.id = t.id AND g.playdate = t.playdate
+SET g.player_ages  = t.player_ages

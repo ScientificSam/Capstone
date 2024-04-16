@@ -169,7 +169,7 @@ CREATE TABLE `gamelogs` (
 ) ENGINE=InnoDB AUTO_INCREMENT=205027 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
-
+ALTER TABLE gamelogs ADD INDEX (v_st_pl1_id), ADD INDEX (v_st_pl2_id), ADD INDEX (v_st_pl3_id), ADD INDEX (v_st_pl4_id), ADD INDEX (v_st_pl5_id), ADD INDEX (v_st_pl6_id), ADD INDEX (v_st_pl7_id), ADD INDEX (v_st_pl8_id), ADD INDEX (v_st_pl9_id), ADD INDEX (playdate);
 
 
 DROP TABLE IF EXISTS biofile;
@@ -223,7 +223,10 @@ CREATE TABLE `player_bio` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=421697 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- The below resultset will go into the player_bio table ------
+ALTER TABLE biofile ADD INDEX (playerid);
+
+
+-- The below resultset will go into the player_bio table as player_weights, player_heights, player_bats,player_throws  ------
 SELECT
        (SELECT GROUP_CONCAT(p.weight SEPARATOR ',')
         FROM capstone.biofile AS p
@@ -271,3 +274,64 @@ SELECT
           OR f.v_st_pl8_id = p.playerid
           OR f.v_st_pl9_id = p.playerid) AS player_throws
 FROM capstone.gamelogs AS f;
+
+
+
+
+-- The below resultset will go into the gamelogs table as player_ages ------
+
+SELECT
+    g.id,
+    g.playdate,
+    CONCAT_WS(', ',
+        IFNULL(TIMESTAMPDIFF(YEAR, STR_TO_DATE(b1.birthdate, '%m/%d/%Y'), STR_TO_DATE(g.playdate, '%Y-%m-%d')), 'NULL'),
+        IFNULL(TIMESTAMPDIFF(YEAR, STR_TO_DATE(b2.birthdate, '%m/%d/%Y'), STR_TO_DATE(g.playdate, '%Y-%m-%d')), 'NULL'),
+        IFNULL(TIMESTAMPDIFF(YEAR, STR_TO_DATE(b3.birthdate, '%m/%d/%Y'), STR_TO_DATE(g.playdate, '%Y-%m-%d')), 'NULL'),
+        IFNULL(TIMESTAMPDIFF(YEAR, STR_TO_DATE(b4.birthdate, '%m/%d/%Y'), STR_TO_DATE(g.playdate, '%Y-%m-%d')), 'NULL'),
+        IFNULL(TIMESTAMPDIFF(YEAR, STR_TO_DATE(b5.birthdate, '%m/%d/%Y'), STR_TO_DATE(g.playdate, '%Y-%m-%d')), 'NULL'),
+        IFNULL(TIMESTAMPDIFF(YEAR, STR_TO_DATE(b6.birthdate, '%m/%d/%Y'), STR_TO_DATE(g.playdate, '%Y-%m-%d')), 'NULL'),
+        IFNULL(TIMESTAMPDIFF(YEAR, STR_TO_DATE(b7.birthdate, '%m/%d/%Y'), STR_TO_DATE(g.playdate, '%Y-%m-%d')), 'NULL'),
+        IFNULL(TIMESTAMPDIFF(YEAR, STR_TO_DATE(b8.birthdate, '%m/%d/%Y'), STR_TO_DATE(g.playdate, '%Y-%m-%d')), 'NULL'),
+        IFNULL(TIMESTAMPDIFF(YEAR, STR_TO_DATE(b9.birthdate, '%m/%d/%Y'), STR_TO_DATE(g.playdate, '%Y-%m-%d')), 'NULL')
+    ) AS player_ages
+FROM
+    gamelogs g
+    LEFT JOIN biofile b1 ON g.v_st_pl1_id = b1.playerid
+    LEFT JOIN biofile b2 ON g.v_st_pl2_id = b2.playerid
+    LEFT JOIN biofile b3 ON g.v_st_pl3_id = b3.playerid
+    LEFT JOIN biofile b4 ON g.v_st_pl4_id = b4.playerid
+    LEFT JOIN biofile b5 ON g.v_st_pl5_id = b5.playerid
+    LEFT JOIN biofile b6 ON g.v_st_pl6_id = b6.playerid
+    LEFT JOIN biofile b7 ON g.v_st_pl7_id = b7.playerid
+    LEFT JOIN biofile b8 ON g.v_st_pl8_id = b8.playerid
+    LEFT JOIN biofile b9 ON g.v_st_pl9_id = b9.playerid
+ORDER BY g.id;
+
+-- The below resultset will go into the gamelogs table as player_exp ------
+
+SELECT
+    g.id,
+    g.playdate,
+    CONCAT_WS(', ',
+        IFNULL(TIMESTAMPDIFF(YEAR, STR_TO_DATE(b1.`PLAY.DEBUT`, '%m/%d/%Y'), STR_TO_DATE(g.playdate, '%Y-%m-%d')), 'NULL'),
+        IFNULL(TIMESTAMPDIFF(YEAR, STR_TO_DATE(b2.`PLAY.DEBUT`, '%m/%d/%Y'), STR_TO_DATE(g.playdate, '%Y-%m-%d')), 'NULL'),
+        IFNULL(TIMESTAMPDIFF(YEAR, STR_TO_DATE(b3.`PLAY.DEBUT`, '%m/%d/%Y'), STR_TO_DATE(g.playdate, '%Y-%m-%d')), 'NULL'),
+        IFNULL(TIMESTAMPDIFF(YEAR, STR_TO_DATE(b4.`PLAY.DEBUT`, '%m/%d/%Y'), STR_TO_DATE(g.playdate, '%Y-%m-%d')), 'NULL'),
+        IFNULL(TIMESTAMPDIFF(YEAR, STR_TO_DATE(b5.`PLAY.DEBUT`, '%m/%d/%Y'), STR_TO_DATE(g.playdate, '%Y-%m-%d')), 'NULL'),
+        IFNULL(TIMESTAMPDIFF(YEAR, STR_TO_DATE(b6.`PLAY.DEBUT`, '%m/%d/%Y'), STR_TO_DATE(g.playdate, '%Y-%m-%d')), 'NULL'),
+        IFNULL(TIMESTAMPDIFF(YEAR, STR_TO_DATE(b7.`PLAY.DEBUT`, '%m/%d/%Y'), STR_TO_DATE(g.playdate, '%Y-%m-%d')), 'NULL'),
+        IFNULL(TIMESTAMPDIFF(YEAR, STR_TO_DATE(b8.`PLAY.DEBUT`, '%m/%d/%Y'), STR_TO_DATE(g.playdate, '%Y-%m-%d')), 'NULL'),
+        IFNULL(TIMESTAMPDIFF(YEAR, STR_TO_DATE(b9.`PLAY.DEBUT`, '%m/%d/%Y'), STR_TO_DATE(g.playdate, '%Y-%m-%d')), 'NULL')
+    ) AS player_exp
+FROM
+    gamelogs g
+    LEFT JOIN biofile b1 ON g.v_st_pl1_id = b1.playerid
+    LEFT JOIN biofile b2 ON g.v_st_pl2_id = b2.playerid
+    LEFT JOIN biofile b3 ON g.v_st_pl3_id = b3.playerid
+    LEFT JOIN biofile b4 ON g.v_st_pl4_id = b4.playerid
+    LEFT JOIN biofile b5 ON g.v_st_pl5_id = b5.playerid
+    LEFT JOIN biofile b6 ON g.v_st_pl6_id = b6.playerid
+    LEFT JOIN biofile b7 ON g.v_st_pl7_id = b7.playerid
+    LEFT JOIN biofile b8 ON g.v_st_pl8_id = b8.playerid
+    LEFT JOIN biofile b9 ON g.v_st_pl9_id = b9.playerid
+ORDER BY g.id;
