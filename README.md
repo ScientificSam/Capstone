@@ -3,26 +3,30 @@ Baseball Analytics
 
 # Problem Statement
 
-Could we predict who will win the future scheduled baseball games, solely based on physical features of the scheduled baseball game?
+Could we predict the game win/lose or team score based on the scheduled game information and the player's physical attributes?
 
-Could we predict the score based on ongoing game? What are the top 10 features to predict the team score?
+What are the top 10 features that affect the score in a baseball game in general?
+
+Are there any similarities between teams in terms of offensive and defensive stats?
+
+Do the factors that affect the score will change from team to team based on the opponent team?
 
 
 
 # Proposed Vision
 
-Based on the physical aspects like the ballpark location, game type, day night, attendance, the players heights, weights and using game logs, build a machine learning model to predict the visting team score.
+Explore the attributes of the scheduled game and the physical attributes of the players, and design a model to predict the team score or team win/lose.  Build a machine learning model to predict the top features that affect the team score, based on the offensive, pitching, and defensive measures from the given game logs. The Impact here is to know what to concentrate on before going to the game based on the top features, that affect the team score and in turn effects the win/loss.
 
 
 
 # About the data
 
-The data was taken from `retrosheet.org` website. The unzipped version of this data conatins bot the `Negro League Data` and `MLB Data`. 
+The data was taken from `retrosheet.org` website. The unzipped version of this data contains both the `Negro League Data` and `MLB Data`. 
 
 
-* All data goes into the `data` folder and subfolders. The `Data` folder contains all of the unzipped version of data arranged in different folders and structures. This data exist in `txt`, `csv`, `eve`, `ros` file formats.
+* All data goes into the `data` folder and subfolders. The `Data` folder contains all of the unzipped versions of data arranged in different folders and structures. This data exist in `txt`, `csv`, `eve`, `ros` file formats.
 
-* All the jupyter notebooks goes into `Notebooks` folder.
+* All the Jupyter notebooks go into `Notebooks` folder.
 
 * All the SQL code for preprocessing the data goes into `SQL` folder.
 
@@ -37,8 +41,6 @@ The data was taken from `retrosheet.org` website. The unzipped version of this d
 I will provide my `env.yml` conda file to reproduce this project.
 
 
-
-
 # Getting started
 
 * Clone this `repo`.
@@ -49,24 +51,23 @@ I will provide my `env.yml` conda file to reproduce this project.
 # Data Engineering
 
 <div style="text-align": justify>
-In the given data `ngldata` in the data folder has lot more features to build a machine laerning model than the data outsdie of this folder. We can treat this outside data as major league baseball `mlb` data.  MLB data has less number of features than the `nglata` and the only data that seems to be useful is the `gamelogs` and `biofile`. here we are going with `mlb` data because the data is new and it has lot more years of data in the gamelogs.
+In the given data `ngldata` in the data folder has a lot more features to build a machine learning model than the data outside of this folder. We can treat this outside data as major league baseball `mlb` data.  MLB data has less number of features than the `ngldata` and the only data that seems to be useful is the `gamelogs` and `biofile`. here we are going with `mlb` data because the data is new and it has a lot more years of data in the game logs.
 </div>
 
 
+Our goal is here to build the data, that we are interested in using this raw `mlb` data. The final data will be in a mysql view, to import into pandas for the data analysis.
 
-Our goal is here to build the data, that we are intrested in using this raw `mlb` data. The final data will be in a mysql view, to import into panads for the data analysis.
+In the `SQL` folder, I provided the mysql queries, to have the data in a view called `gm_logs`.
 
-In the `SQL` folder, I provided the mysql querys, to have the data in a view called `gm_logs`.
-
-Here are the steps involved in creating the view `gm_log`. This view contains the visting team offensive statistics (Batting) and the home team defensive statistics (Pitching and Fielding). 
+Here are the steps involved in creating the view `gm_log`. This view contains the visiting team's offensive statistics (Batting) and the home team's defensive statistics (Pitching and Fielding). 
 
 * Map the field names in the `index.html`  to the .csv files
-* Import all .csv files into the `gamelogs` table, using the `Dbeaver` tool's import data wizard for mysql connection.
+* Import all .csv files into the `gamelogs` table, using the `Dbeaver` tool's import data wizard for MySQL connection.
 * Import the `biofile.csv` into the biofile table, using the `Dbeaver` tool's import data wizard for MySql connection.
-* create a caluclated field called `v_win_val` to store, if the visting team win or lose, based on the MySql querys. create a table called `v_win_table`.
-* create a `player_bio` table to store, all 9 visting players heights, weights, how they bat and throw by using MySql query.
-* create a `gm_log` view to combine all this data using joins. MySql
- querys are in the `SQL` folder.
+* Create a calculated field called `v_win_val` to store, if the visiting team wins or loses, based on the MySql queries. create a table called `v_win_table`.
+* Create a `player_bio` table to store, all 9 visiting player's heights, weights, and how they bat and throw by using MySql query.
+* Create a `gm_log` view to combine all this data using joins. MySql
+ queries are in the `SQL` folder.
 
 
 
@@ -85,18 +86,18 @@ Here are the steps involved in creating the view `gm_log`. This view contains th
 
 # Building models and evaluating
 
-Our aim here is to predict the game win or lose, but the game win or lose depends upon the team score. If we have one team scoring more over the the other team, then the team with highest score wins.
+Our aim here is to predict the game win or lose, but the game win or lose depends upon the team score. If we have one team scoring more the the other team, then the team with the highest score wins.
 
 
 ### Let's first build a model on physical features
 
-After building Logistic and Linear Regression model, Solely based on physical features, In logistic regression (Traget variable as win or lose), we have 50% accuracy. For the linear regression (Traget variable is the team score), we got negative mean squared errors and an R<sup>2</sup> value of 0.02 which is not good at all.
+After building a Logistic and Linear Regression model, Solely based on physical features, In logistic regression (Target variable as win or lose), we have 50% accuracy. For the linear regression (the Target variable is the team score), we got negative mean squared errors and an R<sup>2</sup> value of 0.02 which is not good at all.
 
-Even though the stats model shows, the physical features are statstically significant, they have no predictive power, on guessing the game win or lose or guessing the team score.
+Even though the stats model shows, the physical features are statistically significant, they have no predictive power, on guessing the game win or lose or guessing the team score.
 
 ### Build a model based on on-going game
 
-After building a random forest regressor, to predict the team score, based on the features of  Home team offensive statistics and the visting team defensive statistics, we have a mean squared error of 0.21, which is somewhat good at predicting the team score.
+After building a random forest regressor, to predict the team score, based on the features of the Home team's offensive statistics and the visiting team's defensive statistics, we have a mean squared error of 0.21, which is somewhat good at predicting the team score.
 
 The top 10 features that determine the team score is
 
@@ -117,7 +118,7 @@ The top 10 features that determine the team score is
 
 ![Clustering Defensive Stats](./Images/Number%20of%20clusters.png)
 
-Here we have a bunch of selected teams and their offensive and defensive stats. After we did the K-Means clustering, we can see we can group them into 3 or 4 clusters. 
+Here we have a bunch of selected teams and their offensive and defensive stats. After we did the K-Means clustering, we could see we could group them into 3 or 4 clusters. 
 
 Teams when they are visting and similar in offensive stats. 
 
@@ -139,22 +140,24 @@ Boston Red Sox, Chicago White Sox, New York Yankees, Philadelphia Phillies, Pitt
 
 ### Mets doesn't have growth in their scoring.
 
+Yankees Time Line. The black points represents actual data points for the team score when they are visting team and the blue line with spikes represnts the timeline until the year of 2027. From 2022 is the projected team score.
+
 ![Yankees Timeline](./Images/Yankees%20Timeline.png)
 
-Yankees Trend Line
+Yankees Trend Line. On the x-axis we have years and on the y-axis we have avg team score.
 
 ![Yankees Trendline](./Images/Yankees%20Trendline.png)
 
-Mets are younger team than yankees
+Mets are younger team than yankees. 
 
 ![Mets Timeline](./Images/Mets%20Timeline.png)
 
-Mets Trend Line
+Mets Trend Line. On the x-axis we have years and on the y-axis we have avg team score.
 
 ![Mets Trendline](./Images/Mets%20trendline.png)
 
 ### Mets are intentional about how they win
 
-Yankees vs Mets co-relational wins
+Yankees vs Mets co-relational wins, here 'NYA' is Yankees and 'NYN' is Mets.
 
 ![Yankees vs Mets Winning Co-Relations](./Images/Mets%20vs%20Yankees%20Stats.png)
