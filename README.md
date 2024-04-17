@@ -101,16 +101,17 @@ After building a random forest regressor, to predict the team score, based on th
 
 The top 10 features that determine the team score is
 
-* len_game &emsp;&emsp; -- &nbsp;&nbsp; Number of Innings(9 Innings = 54)
-* h_pch_used &nbsp;&nbsp; -- &nbsp;&nbsp;Number of pitchers used
+* h_pch_used &emsp;&emsp; -- &nbsp;&nbsp; Number of pitchers used
 * h_errors &emsp;&nbsp;&nbsp; -- &nbsp;&nbsp; Team Earned Runs
 * v_walks &nbsp;&nbsp; -- &nbsp;&nbsp; Walk because of pitcher error
 * len_min &nbsp;&nbsp; -- &nbsp;&nbsp; Length of the game in minutes
 * attendance &emsp;&nbsp;&nbsp; -- &nbsp;&nbsp; Ball park attendance
-* v_sf &nbsp;&nbsp; -- &nbsp;&nbsp; Sacrifice flys.
-* v_lft_base &nbsp;&nbsp; -- &nbsp;&nbsp; People left on bases.
-* median_weights &nbsp;&nbsp; -- &nbsp;&nbsp; The median of 9 players weights
-* h_assists &nbsp;&nbsp; -- &nbsp;&nbsp; Number of assists when playing defensive
+* v_sf &emsp;&emsp;&emsp;&nbsp;&nbsp; -- &emsp;&nbsp;&nbsp; Sacrifice flys
+* v_lft_base &nbsp;&nbsp; -- &nbsp;&nbsp; People left on bases
+* h_wld_pitch &nbsp;&nbsp; -- &nbsp;&nbsp;  when pitch is so errant that the catcher is unable to control it
+* v_hit_pitch &nbsp;&nbsp; -- &nbsp;&nbsp; when a batter is struck by a pitched ball without swinging at it
+
+![Top 10 features for predicting the team score](./Images/Top%2010%20Features%20CPU.png)
 
 # Team Based analysis
 
@@ -128,6 +129,8 @@ Chicago White Sox , Philadelphia Phillies, Pittsburgh Pirates, St. Louis Cardina
 Cluster 1 :
 Los Angeles Dodgers, Oakland Athletics, Washington Nationals.
 
+Cluster 3 :
+Boston Red Sox, New York Yankees. 
 
 Home Teams when they are playing defensive, similar in defensive stats.
 
