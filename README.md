@@ -91,15 +91,15 @@ Our aim here is to predict the game win or lose, but the game win or lose depend
 
 ### Let's first build a model on physical features
 
-After building a Logistic and Linear Regression model, Solely based on physical features, In logistic regression (Target variable as win or lose), we have 50% accuracy. For the linear regression (the Target variable is the team score), we got negative mean squared errors and an R<sup>2</sup> value of 0.02 which is not good at all.
+After building a Logistic and Linear Regression model, Solely based on physical features, In logistic regression (Target variable as win or lose), we have 50% accuracy. For the linear regression (the Target variable is the team score), we got negative mean squared errors and an R<sup>2</sup> value of 0.004 which is not good at all.
 
 Even though the stats model shows, the physical features are statistically significant, they have no predictive power, on guessing the game win or lose or guessing the team score.
 
-### Build a model based on on-going game
+### Build a model based on offensive and defensive stats
 
-After building a random forest regressor, to predict the team score, based on the features of the Home team's offensive statistics and the visiting team's defensive statistics, we have a mean squared error of 0.21, which is somewhat good at predicting the team score.
+After building a random forest regressor, to predict the team score, based on the features of the Home team's offensive statistics and the visiting team's defensive statistics, we have an R<sup>2</sup> value of 0.47 for radom forest regression and 0.48 for gradient boosting, which is somewhat good at predicting the team score than just a stats model.
 
-The top 10 features that determine the team score is
+The top 10 features that determine the team score based on gardient boosting
 
 * h_pch_used &emsp;&emsp; -- &nbsp;&nbsp; Number of pitchers used
 * h_errors &emsp;&nbsp;&nbsp; -- &nbsp;&nbsp; Team Earned Runs
@@ -112,6 +112,18 @@ The top 10 features that determine the team score is
 * v_hit_pitch &nbsp;&nbsp; -- &nbsp;&nbsp; when a batter is struck by a pitched ball without swinging at it
 
 ![Top 10 features for predicting the team score](./Images/Top%2010%20Features%20CPU.png)
+
+
+### Neural Networks
+
+The accuracy is at present 72%. The Top 10 features for predicting the team score according to Neural Netwroks.
+
+![Top 10 features for predicting the team score according to Neural Netwroks](./Images/Top%2010%20features%20NN.png)
+
+Model Training
+
+![Model training and loss](./Images/Model%20training.png)
+
 
 # Team Based analysis
 
@@ -162,5 +174,13 @@ Mets Trend Line. On the x-axis we have years and on the y-axis we have avg team 
 ### Mets are intentional about how they win
 
 Yankees vs Mets co-relational wins, here 'NYA' is Yankees and 'NYN' is Mets.
+
+Yankees steal more bases, do intentional walks in order to win.
+
+When it comes to bat Yankees don't do much in order to win, they don't hit much.
+
+<br>
+
+Mets sacrifice more and bat more in order to win the game, instead of stealing bases and doing intentional walks.
 
 ![Yankees vs Mets Winning Co-Relations](./Images/Mets%20vs%20Yankees%20Stats.png)
